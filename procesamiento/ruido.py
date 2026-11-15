@@ -24,10 +24,16 @@ def a_uint8_matlab(x: np.ndarray) -> np.ndarray:
     return escalado.astype(np.uint8)
 
 
-def ruido_gaussiano(imagen: np.ndarray, varianza: float, rng: np.random.Generator) -> np.ndarray:
-    """Suma ruido normal de media 0 y la varianza pedida (intensidades en [0, 1])."""
+def ruido_gaussiano(imagen: np.ndarray, media: float, rng: np.random.Generator) -> np.ndarray:
+    """Suma ruido normal de media `media` y varianza 0.01 (intensidades en [0, 1]).
+
+    Es `imnoise(I,'gaussian',media)`: con un solo número, MATLAB lo toma como la
+    media y deja la varianza en su valor por defecto. Así interpretamos el
+    "nivel" gaussiano del paper, porque es lo que mejor reproduce sus tablas
+    (investigacion/INFORME.md).
+    """
     normalizada = imagen.astype(np.float64) / p.MAX_INTENSIDAD
-    ruido = rng.normal(p.MEDIA_RUIDO_GAUSSIANO, np.sqrt(varianza), size=imagen.shape)
+    ruido = rng.normal(media, np.sqrt(p.VARIANZA_RUIDO_GAUSSIANO), size=imagen.shape)
     con_ruido = np.clip(normalizada + ruido, p.INTENSIDAD_MIN_NORMALIZADA, p.INTENSIDAD_MAX_NORMALIZADA)
     return a_uint8_matlab(con_ruido)
 
@@ -51,7 +57,7 @@ RUIDOS: dict[str, Callable[[np.ndarray, float, np.random.Generator], np.ndarray]
 def agregar_ruido(imagen: np.ndarray, tipo: str, valor: float, semilla: int) -> np.ndarray:
     """Agrega ruido de tipo `tipo` a la imagen RGB uint8 completa.
 
-    `valor` es la varianza (gaussiano) o la densidad d (sal_pimienta).
+    `valor` es la media del ruido (gaussiano) o la densidad d (sal_pimienta).
     """
     rng = np.random.default_rng(semilla)
     return RUIDOS[tipo](imagen, valor, rng)

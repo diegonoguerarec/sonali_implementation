@@ -1,0 +1,11 @@
+clahe (tabla/final/relleno),techo_psnr,techo_ssim,techo_epi,media_B_limpia_realzada,media_B_fig8_mediana_sp001
+redondeada/redondear/centrado,36.921683,0.975045,1.131049,14.888619,14.771917
+redondeada/redondear/final,36.925433,0.975037,1.130414,14.887790,14.768272
+redondeada/truncar/centrado,37.260101,0.975909,1.130710,14.682453,14.527396
+redondeada/truncar/final,37.259823,0.975903,1.130537,14.681679,14.523745
+continua/redondear/centrado,36.935416,0.975268,1.128612,14.885259,14.761915
+continua/redondear/final,36.942196,0.975272,1.128817,14.884937,14.756928
+continua/truncar/centrado,37.377170,0.976869,1.129387,14.570437,14.449620
+continua/truncar/final,37.379313,0.976867,1.129834,14.568888,14.439804
+opencv,25.511030,0.863745,1.783387,23.104231,22.112871
+sin CLAHE (ruidosa s&p 0.01),,,,,13.550486

@@ -1,0 +1,16 @@
+vuelta,variable,valor_optimo,valor_por_defecto,mediana_optimo,mediana_con_defecto,vuelve_al_defecto
+1,ruido_gauss,media,varianza,0.349684,0.603829,no
+1,PSNR,gris|255,rgb|255,0.349684,0.358959,sí
+1,SSIM,volumen|rgb,plano|rgb,0.349684,0.500968,no
+2,ruido_gauss,media,varianza,0.151636,0.439514,no
+2,clahe[2],final,centrado,0.151636,0.151859,sí
+2,PSNR,gris|rango,rgb|255,0.151636,0.214840,no
+2,SSIM,wang|gris,plano|rgb,0.151636,0.252229,no
+2,CoC,gris|limpia,rgb|limpia,0.151636,0.194482,no
+2,EPI,canal,rgb,0.151636,0.155189,sí
+3,ruido_gauss,media,varianza,0.142210,0.412612,no
+3,clahe[2],final,centrado,0.142210,0.143302,sí
+3,PSNR,gris|rango,rgb|255,0.142210,0.171946,no
+3,SSIM,plano|gris,plano|rgb,0.142210,0.239102,no
+3,CoC,gris|limpia,rgb|limpia,0.142210,0.144167,sí
+3,EPI,gris,rgb,0.142210,0.144167,sí

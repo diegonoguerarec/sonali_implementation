@@ -1,0 +1,49 @@
+agrupado_por,grupo,filas,coincide,cerca,no_coincide,mediana_error_normalizado,promedio_error_normalizado
+total,todas,200,3,56,141,0.271037,6.617682
+calibración/validación,calibración,160,3,48,109,0.143768,5.227802
+calibración/validación,validación,40,0,8,32,1.814147,12.177204
+tabla,Tabla 3,40,2,12,26,0.097756,0.129390
+tabla,Tabla 4,40,1,6,33,0.083723,0.143910
+tabla,Tabla 5,40,0,30,10,0.216880,0.310308
+tabla,Tabla 6,40,0,0,40,8.781374,20.327599
+tabla,Tabla 7,20,0,7,13,2.178699,5.658051
+tabla,Tabla 8,20,0,1,19,1.697861,18.696358
+métrica,PSNR,50,2,14,34,0.103923,0.272609
+métrica,SSIM,50,1,6,43,0.117455,0.348139
+métrica,CoC,50,0,36,14,0.271037,0.771149
+métrica,EPI,50,0,0,50,14.041555,25.078831
+filtro,mediana,40,0,16,24,0.138309,1.979189
+filtro,wiener,40,1,12,27,0.197456,5.910585
+filtro,media,40,1,6,33,0.299568,3.193140
+filtro,gaussiano,40,0,10,30,0.518123,17.422761
+filtro,mediana_ponderada,40,1,12,27,0.359168,4.582736
+ruido,sal_pimienta,120,3,37,80,0.312921,7.063338
+ruido,gaussiano,80,0,19,61,0.260701,5.949198
+filtro y ruido,mediana / sal_pimienta,24,0,11,13,0.107213,1.759004
+filtro y ruido,mediana / gaussiano,16,0,5,11,0.210866,2.309467
+filtro y ruido,wiener / sal_pimienta,24,1,7,16,0.240315,7.207382
+filtro y ruido,wiener / gaussiano,16,0,5,11,0.177416,3.965388
+filtro y ruido,media / sal_pimienta,24,1,4,19,0.450508,4.195065
+filtro y ruido,media / gaussiano,16,0,2,14,0.202691,1.690252
+filtro y ruido,gaussiano / sal_pimienta,24,0,7,17,0.557517,18.562742
+filtro y ruido,gaussiano / gaussiano,16,0,3,13,0.314990,15.712789
+filtro y ruido,mediana_ponderada / sal_pimienta,24,1,8,15,0.213262,3.592499
+filtro y ruido,mediana_ponderada / gaussiano,16,0,4,12,0.460961,6.068093
+ruido y nivel,sal_pimienta 0.001,20,0,9,11,0.103313,0.596545
+ruido y nivel,gaussiano 0.001,20,0,7,13,0.231195,5.609313
+ruido y nivel,sal_pimienta 0.01,20,0,9,11,0.098508,1.063487
+ruido y nivel,gaussiano 0.01,20,0,6,14,0.246851,5.733243
+ruido y nivel,sal_pimienta 0.1,20,2,6,12,0.102144,6.146068
+ruido y nivel,gaussiano 0.1,20,0,3,17,0.305546,6.217690
+ruido y nivel,sal_pimienta 0.2,20,1,5,14,0.276891,10.219520
+ruido y nivel,gaussiano 0.2,20,0,3,17,0.272733,6.236546
+ruido y nivel,sal_pimienta 0.005,20,0,7,13,2.178699,5.658051
+ruido y nivel,sal_pimienta 0.5,20,0,1,19,1.697861,18.696358
+métrica y ruido,PSNR / sal_pimienta,30,2,10,18,0.099743,0.360075
+métrica y ruido,PSNR / gaussiano,20,0,4,16,0.108971,0.141411
+métrica y ruido,SSIM / sal_pimienta,30,1,4,25,0.116179,0.455192
+métrica y ruido,SSIM / gaussiano,20,0,2,18,0.121208,0.187561
+métrica y ruido,CoC / sal_pimienta,30,0,23,7,0.168306,1.082858
+métrica y ruido,CoC / gaussiano,20,0,13,7,0.298559,0.303586
+métrica y ruido,EPI / sal_pimienta,30,0,0,30,10.487663,26.355229
+métrica y ruido,EPI / gaussiano,20,0,0,20,15.263135,23.164235

@@ -1,7 +1,10 @@
 """Métricas de calidad: PSNR, SSIM, CoC y EPI.
 
-Todas se calculan sobre la imagen RGB completa (alto × ancho × 3), en float64,
-contra la imagen limpia. Si algún denominador da cero, devuelven NaN y avisan.
+Todas se calculan en float64 contra la imagen limpia. PSNR y SSIM usan la
+imagen en gris (`rgb2gray` de MATLAB); CoC y EPI, la imagen RGB completa
+(alto × ancho × 3). El dominio de PSNR y SSIM y el pico del PSNR son los que
+mejor reproducen las tablas del paper (investigacion/INFORME.md). Si algún
+denominador da cero, devuelven NaN y avisan.
 """
 
 import warnings
@@ -18,21 +21,35 @@ def _nan_con_aviso(metrica: str) -> float:
     return float("nan")
 
 
-def psnr(imagen: np.ndarray, referencia: np.ndarray) -> float:
-    """PSNR = 10·log10(255²/MSE), con MSE sobre todos los valores RGB.
+def a_gris(imagen: np.ndarray) -> np.ndarray:
+    """`rgb2gray` de MATLAB: suma ponderada de R, G y B, redondeada a uint8.
 
-    Pico 255: valor por defecto de `psnr` de MATLAB para uint8 (ecuación 2).
-    Si MSE = 0, devuelve infinito.
+    https://www.mathworks.com/help/matlab/ref/rgb2gray.html
     """
-    diferencia = imagen.astype(np.float64) - referencia.astype(np.float64)
-    mse = float(np.mean(diferencia ** 2))
+    suma = imagen.astype(np.float64) @ np.array(p.COEFICIENTES_GRIS)
+    return np.floor(suma + p.DESPLAZAMIENTO_REDONDEO).astype(np.uint8)
+
+
+def psnr(imagen: np.ndarray, referencia: np.ndarray) -> float:
+    """PSNR = 10·log10(pico²/MSE) sobre la imagen en gris (ecuaciones 2 y 3).
+
+    El pico es "the maximum difference in the input image" (texto de la
+    ecuación 2): máximo − mínimo de la referencia en gris. Si MSE = 0, devuelve
+    infinito; si la referencia es constante, NaN.
+    """
+    x = a_gris(imagen).astype(np.float64)
+    y = a_gris(referencia).astype(np.float64)
+    mse = float(np.mean((x - y) ** 2))
     if mse == 0:
         return float("inf")
-    return float(p.FACTOR_DECIBELES * np.log10(p.PICO_PSNR ** 2 / mse))
+    pico = float(y.max() - y.min())
+    if pico == 0:
+        return _nan_con_aviso("PSNR")
+    return float(p.FACTOR_DECIBELES * np.log10(pico ** 2 / mse))
 
 
 def _filtro_gaussiano_ssim(x: np.ndarray) -> np.ndarray:
-    """Ventana gaussiana 11×11, σ = 1.5, bordes replicados, plano por plano."""
+    """Ventana gaussiana 11×11, σ = 1.5, bordes replicados."""
     tamano = (p.TAMANO_VENTANA_SSIM, p.TAMANO_VENTANA_SSIM)
     return cv2.GaussianBlur(x, tamano, p.SIGMA_SSIM, sigmaY=p.SIGMA_SSIM,
                             borderType=cv2.BORDER_REPLICATE)
@@ -43,11 +60,11 @@ def ssim(imagen: np.ndarray, referencia: np.ndarray) -> float:
 
     C1 = (0.01·255)², C2 = (0.03·255)², C3 = C2/2 y exponentes 1, que dan
     ((2μxμy + C1)(2σxy + C2)) / ((μx² + μy² + C1)(σx² + σy² + C2)).
-    La ventana recorre cada plano de color sin mezclarlos (equivale a
-    DataFormat="SSC"); el resultado es el promedio del mapa alto × ancho × 3.
+    Se calcula sobre la imagen en gris (`rgb2gray`); el resultado es el promedio
+    del mapa alto × ancho.
     """
-    x = imagen.astype(np.float64)
-    y = referencia.astype(np.float64)
+    x = a_gris(imagen).astype(np.float64)
+    y = a_gris(referencia).astype(np.float64)
     c1 = (p.K1_SSIM * p.RANGO_DINAMICO_SSIM) ** 2
     c2 = (p.K2_SSIM * p.RANGO_DINAMICO_SSIM) ** 2
     mu_x = _filtro_gaussiano_ssim(x)

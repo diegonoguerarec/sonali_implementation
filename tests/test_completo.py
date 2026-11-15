@@ -45,6 +45,15 @@ def test_corrida_completa(tmp_path, imagen_sintetica, tipo, valor):
     assert len(datos["procedencia"]) > 0
 
 
+@pytest.mark.parametrize("filtro", ["mediana", "media", "gaussiano", "wiener"])
+def test_corrida_con_los_otros_filtros(tmp_path, imagen_sintetica, filtro):
+    ruta, _ = imagen_sintetica
+    carpeta = sonali.main([str(ruta), "sal_pimienta", "0.01", filtro], dir_resultado=tmp_path / "r")
+    datos = json.loads((carpeta / "parametros.json").read_text(encoding="utf-8"))
+    assert datos["filtro"]["tipo"] == filtro and "ventana" in datos["filtro"]
+    assert datos["clahe"]["clip_cuentas"] >= 1 and "clip_limit_opencv" not in datos["clahe"]
+
+
 def test_ruidosa_guardada_en_rgb(tmp_path, imagen_sintetica):
     """La ruidosa con sal y pimienta conserva los valores no afectados en el orden RGB."""
     ruta, rgb = imagen_sintetica
@@ -61,7 +70,7 @@ def test_ruidosa_guardada_en_rgb(tmp_path, imagen_sintetica):
     ["IMG", "sal_pimienta", "1.5", "mediana_ponderada"],
     ["IMG", "gaussiano", "0.001", "mediana_ponderada", "--clip-limit", "0"],
     ["IMG", "gaussiano", "0.001", "mediana_ponderada", "--clip-limit", "1.5"],
-    ["IMG", "gaussiano", "0.001", "media"],
+    ["IMG", "gaussiano", "0.001", "filtro_inexistente"],
 ])
 def test_validaciones(tmp_path, imagen_sintetica, argumentos):
     ruta, _ = imagen_sintetica

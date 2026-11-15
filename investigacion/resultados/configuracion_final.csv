@@ -1,0 +1,12 @@
+variable,valor
+ruido_gauss,media
+clahe,"('redondeada', 'redondear', 'centrado')"
+mediana,"(5, 'ceros')"
+wiener,"(5,)"
+media,"(5, 'ceros')"
+gaussiano,"('fspecial', 3, 0.5)"
+mediana_ponderada,"(1,)"
+PSNR,gris|rango
+SSIM,plano|gris
+CoC,rgb|limpia
+EPI,rgb

@@ -34,7 +34,9 @@ def crear_parser() -> argparse.ArgumentParser:
     parser.add_argument("tipo_ruido", metavar="TIPO_RUIDO", choices=list(RUIDOS),
                         help=f"tipo de ruido: {', '.join(RUIDOS)}")
     parser.add_argument("varianza", metavar="VARIANZA", type=float,
-                        help="en 'gaussiano': varianza del ruido, con intensidades en [0, 1] (> 0). "
+                        help="nivel de ruido (el paper lo llama 'noise variance'), > 0. "
+                             "En 'gaussiano': media del ruido, con intensidades en [0, 1]; la "
+                             "varianza queda fija en 0.01, como en imnoise(I,'gaussian',nivel). "
                              "En 'sal_pimienta': densidad d de imnoise, la fracción de valores "
                              "afectados, en (0, 1]")
     parser.add_argument("tipo_filtro", metavar="TIPO_FILTRO", choices=list(FILTROS),
@@ -70,9 +72,9 @@ def leer_imagen_rgb(ruta: Path) -> np.ndarray:
 
 
 def validar_argumentos(args: argparse.Namespace) -> None:
-    """Valida la varianza o densidad y el clip limit."""
+    """Valida el nivel de ruido (media gaussiana o densidad) y el clip limit."""
     if args.varianza <= 0:
-        raise ValueError(f"La varianza tiene que ser > 0 (se recibió {args.varianza}).")
+        raise ValueError(f"El nivel de ruido tiene que ser > 0 (se recibió {args.varianza}).")
     if args.tipo_ruido == "sal_pimienta" and args.varianza > p.INTENSIDAD_MAX_NORMALIZADA:
         raise ValueError(f"La densidad de sal y pimienta tiene que estar en (0, 1] "
                          f"(se recibió {args.varianza}).")

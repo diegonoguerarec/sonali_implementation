@@ -11,6 +11,7 @@ import cv2
 import numpy as np
 
 from procesamiento import parametros as p
+from procesamiento.filtros import DESCRIPCION_FILTROS
 from procesamiento.metricas import METRICAS
 
 COLUMNAS = ("ruidosa", "solo_filtro", "final")
@@ -59,7 +60,8 @@ def datos_parametros(
     alto, ancho = limpia.shape[:2]
     ruido = {"tipo": tipo_ruido, "semilla": semilla, "generador": "numpy.random.default_rng"}
     if tipo_ruido == "gaussiano":
-        ruido |= {"varianza": valor_ruido, "media": p.MEDIA_RUIDO_GAUSSIANO,
+        ruido |= {"media": valor_ruido, "varianza": p.VARIANZA_RUIDO_GAUSSIANO,
+                  "equivalente_matlab": "imnoise(I, 'gaussian', media)",
                   "escala": "intensidades en [0, 1]; recorte a [0, 1]; uint8 con floor(x*255 + 0.5)"}
     else:
         ruido |= {"densidad": valor_ruido,
@@ -70,28 +72,23 @@ def datos_parametros(
         "imagen": {"ruta": str(ruta_imagen.resolve()), "alto": alto, "ancho": ancho,
                    "canales": int(limpia.shape[2])},
         "ruido": ruido,
-        "filtro": {
-            "tipo": tipo_filtro,
-            "ventana": [p.TAMANO_VENTANA_MEDIANA, p.TAMANO_VENTANA_MEDIANA],
-            "pesos": p.PESOS_MEDIANA_PONDERADA.tolist(),
-            "definicion": "repetir cada valor según su peso y tomar la mediana",
-            "regla_empate": "suma de pesos par: promedio de los 2 centrales, sin fracción (medfilt2)",
-            "bordes": "relleno con ceros (medfilt2)",
-        },
+        "filtro": {"tipo": tipo_filtro, **DESCRIPCION_FILTROS[tipo_filtro]},
         "clahe": {
             "clip_limit_normalizado": clip_limit,
             "teselas": list(p.TESELAS_CLAHE),
             "bins": p.BINS_CLAHE,
             "distribucion": p.DISTRIBUCION_CLAHE,
+            "implementacion": "adapthisteq reconstruido con NumPy (procesamiento/realce.py)",
+            "lados_tesela": list(clahe["lados_tesela"]),
             "pixeles_por_tesela": clahe["pixeles_por_tesela"],
             "clip_cuentas": clahe["clip_cuentas"],
-            "clip_limit_opencv": clahe["clip_limit_opencv"],
         },
         "metricas": {
-            "referencia": "imagen limpia; RGB completo; float64",
-            "PSNR": "10*log10(255^2 / MSE), MSE sobre todos los valores RGB; inf si MSE = 0",
-            "SSIM": ("gaussiana 11x11, sigma 1.5, bordes replicados, por plano; "
-                     "C1=(0.01*255)^2, C2=(0.03*255)^2, C3=C2/2, exponentes 1; promedio del mapa HxWx3"),
+            "referencia": "imagen limpia; float64; PSNR y SSIM en gris (rgb2gray), CoC y EPI en RGB",
+            "PSNR": ("10*log10(pico^2 / MSE) sobre la imagen en gris; pico = max - min de la limpia "
+                     "en gris; inf si MSE = 0"),
+            "SSIM": ("sobre la imagen en gris; gaussiana 11x11, sigma 1.5, bordes replicados; "
+                     "C1=(0.01*255)^2, C2=(0.03*255)^2, C3=C2/2, exponentes 1; promedio del mapa HxW"),
             "CoC": "Pearson entre todos los valores RGB",
             "EPI": "sum|X'(m,n+1)-X'(m,n)| / sum|X(m,n+1)-X(m,n)|, 3 canales",
         },

@@ -5,7 +5,7 @@ import math
 import numpy as np
 import pytest
 
-from procesamiento.metricas import calcular_metricas, coc, epi, psnr, ssim
+from procesamiento.metricas import a_gris, calcular_metricas, coc, epi, psnr, ssim
 
 
 def test_imagenes_identicas():
@@ -18,10 +18,25 @@ def test_imagenes_identicas():
     assert m["EPI"] == pytest.approx(1.0)
 
 
-def test_psnr_100_contra_110():
-    ref = np.full((10, 10, 3), 100, dtype=np.uint8)
-    otra = np.full((10, 10, 3), 110, dtype=np.uint8)
-    assert psnr(otra, ref) == pytest.approx(28.1308, abs=1e-4)
+def test_gris_de_matlab():
+    imagen = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255], [10, 20, 30]]], dtype=np.uint8)
+    # 76.23 -> 76; 149.70 -> 150; 29.08 -> 29; 2.989 + 11.741 + 3.421 = 18.15 -> 18.
+    np.testing.assert_array_equal(a_gris(imagen), [[76, 150, 29, 18]])
+
+
+def test_psnr_en_gris_con_pico_por_rango():
+    # Canales iguales: el gris es el mismo valor. Referencia con 0 y 200 (pico 200);
+    # la otra está 10 niveles arriba (MSE = 100): 10·log10(200² / 100) = 26.0206 dB.
+    ref = np.zeros((10, 10, 3), dtype=np.uint8)
+    ref[:, 5:] = 200
+    otra = ref + 10
+    assert psnr(otra, ref) == pytest.approx(26.0206, abs=1e-4)
+
+
+def test_psnr_con_referencia_constante_devuelve_nan():
+    ref = np.full((5, 5, 3), 100, dtype=np.uint8)
+    with pytest.warns(UserWarning):
+        assert math.isnan(psnr(ref + 10, ref))
 
 
 def test_epi_a_mano():

@@ -4,7 +4,7 @@ import numpy as np
 
 from procesamiento.filtros import FILTROS
 from procesamiento.metricas import calcular_metricas
-from procesamiento.realce import aplicar_clahe, clip_limit_matlab_a_opencv
+from procesamiento.realce import aplicar_clahe, datos_clahe
 from procesamiento.ruido import agregar_ruido
 
 
@@ -25,7 +25,7 @@ def procesar_imagen(
     """Aplica el método a una imagen RGB uint8 limpia, sin leer ni escribir archivos.
 
     Devuelve las imágenes "ruidosa", "solo_filtro" y "final", sus métricas contra
-    la limpia y los datos de la conversión del clip limit de CLAHE.
+    la limpia y los datos de CLAHE (píxeles por tesela y clip en cuentas).
     """
     ruidosa = agregar_ruido(limpia, tipo_ruido, valor_ruido, semilla)
     solo_filtro = _por_canal(ruidosa, FILTROS[tipo_filtro])
@@ -35,5 +35,5 @@ def procesar_imagen(
     return {
         "imagenes": imagenes,
         "metricas": {nombre: calcular_metricas(img, limpia) for nombre, img in imagenes.items()},
-        "clahe": clip_limit_matlab_a_opencv(clip_limit, alto, ancho),
+        "clahe": datos_clahe(clip_limit, alto, ancho),
     }

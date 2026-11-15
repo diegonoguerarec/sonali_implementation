@@ -15,9 +15,11 @@ def test_sal_pimienta_fracciones():
     assert set(np.unique(salida)) <= {0, 128, 255}
 
 
-def test_gaussiano_varianza():
-    salida = agregar_ruido(GRIS, "gaussiano", 0.01, 0)
+def test_gaussiano_media_y_varianza():
+    # El nivel es la media del ruido; la varianza queda fija en 0.01 (imnoise(I,'gaussian',m)).
+    salida = agregar_ruido(GRIS, "gaussiano", 0.2, 0)
     diferencia = salida.astype(np.float64) / 255 - 128 / 255
+    assert np.mean(diferencia) == pytest.approx(0.2, abs=0.003)
     assert np.var(diferencia) == pytest.approx(0.01, rel=0.05)
     assert salida.dtype == np.uint8
 

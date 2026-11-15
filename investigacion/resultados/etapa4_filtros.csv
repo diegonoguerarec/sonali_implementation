@@ -1,0 +1,88 @@
+vuelta,filtro,parametros,mediana_error,promedio_error
+1,mediana,"(3, 'ceros')",0.188030,3.183020
+1,mediana,"(3, 'symmetric')",0.212723,3.178897
+1,mediana,"(5, 'ceros')",0.227272,1.610065
+1,mediana,"(5, 'symmetric')",0.248435,1.609492
+1,mediana,"(7, 'ceros')",0.266881,1.059165
+1,mediana,"(7, 'symmetric')",0.291693,1.059367
+1,wiener,"(3,)",0.496984,8.822941
+1,wiener,"(5,)",0.428058,5.092602
+1,wiener,"(7,)",0.572492,3.697325
+1,media,"(3, 'ceros')",0.297968,5.028352
+1,media,"(3, 'replicate')",0.296077,5.021242
+1,media,"(3, 'symmetric')",0.296077,5.021242
+1,media,"(5, 'ceros')",0.345204,2.260589
+1,media,"(5, 'replicate')",0.367870,2.257459
+1,media,"(5, 'symmetric')",0.368999,2.257335
+1,media,"(7, 'ceros')",0.430416,1.320096
+1,media,"(7, 'replicate')",0.454729,1.316564
+1,media,"(7, 'symmetric')",0.455972,1.316955
+1,gaussiano,"('fspecial', 3, 1.0)",1.390881,6.387318
+1,gaussiano,"('fspecial', 5, 1.0)",1.519377,4.807279
+1,gaussiano,"('imgaussfilt', 5, 1.0)",1.529858,4.807874
+1,gaussiano,"('fspecial', 3, 0.5)",0.587907,14.624358
+1,gaussiano,"('fspecial', 5, 0.5)",0.590346,14.606538
+1,gaussiano,"('imgaussfilt', 3, 0.5)",0.586371,14.630444
+1,mediana_ponderada,"(4,)",0.353990,7.012902
+1,mediana_ponderada,"(1,)",0.181732,3.281319
+1,mediana_ponderada,"(2,)",0.210043,3.519569
+1,mediana_ponderada,"(3,)",0.289758,4.890225
+1,mediana_ponderada,"(5,)",0.580321,9.321688
+2,mediana,"(3, 'ceros')",0.151773,3.219453
+2,mediana,"(3, 'symmetric')",0.153685,3.211119
+2,mediana,"(5, 'ceros')",0.148491,1.524232
+2,mediana,"(5, 'symmetric')",0.140738,1.523262
+2,mediana,"(7, 'ceros')",0.190267,0.984621
+2,mediana,"(7, 'symmetric')",0.232293,0.983751
+2,wiener,"(3,)",0.524091,8.813614
+2,wiener,"(5,)",0.113107,4.881772
+2,wiener,"(7,)",0.318781,3.559536
+2,media,"(3, 'ceros')",0.362152,5.048124
+2,media,"(3, 'replicate')",0.374233,5.040754
+2,media,"(3, 'symmetric')",0.374233,5.040754
+2,media,"(5, 'ceros')",0.180291,2.143201
+2,media,"(5, 'replicate')",0.187207,2.143556
+2,media,"(5, 'symmetric')",0.187632,2.143500
+2,media,"(7, 'ceros')",0.312550,1.238743
+2,media,"(7, 'replicate')",0.354276,1.240205
+2,media,"(7, 'symmetric')",0.355217,1.240962
+2,gaussiano,"('fspecial', 3, 1.0)",1.162872,6.160116
+2,gaussiano,"('fspecial', 5, 1.0)",1.342003,4.634358
+2,gaussiano,"('imgaussfilt', 5, 1.0)",1.344343,4.637039
+2,gaussiano,"('fspecial', 3, 0.5)",0.133490,14.245686
+2,gaussiano,"('fspecial', 5, 0.5)",0.132873,14.227482
+2,gaussiano,"('imgaussfilt', 3, 0.5)",0.133926,14.252111
+2,mediana_ponderada,"(4,)",0.610416,7.170474
+2,mediana_ponderada,"(1,)",0.232359,3.281434
+2,mediana_ponderada,"(2,)",0.317358,3.533463
+2,mediana_ponderada,"(3,)",0.508928,4.978679
+2,mediana_ponderada,"(5,)",0.880962,9.550881
+3,mediana,"(3, 'ceros')",0.141825,3.212146
+3,mediana,"(3, 'symmetric')",0.139761,3.206925
+3,mediana,"(5, 'ceros')",0.121366,1.540199
+3,mediana,"(5, 'symmetric')",0.131222,1.537423
+3,mediana,"(7, 'ceros')",0.254906,1.002356
+3,mediana,"(7, 'symmetric')",0.288034,0.998936
+3,wiener,"(3,)",0.547974,8.811629
+3,wiener,"(5,)",0.100307,4.891896
+3,wiener,"(7,)",0.342848,3.570027
+3,media,"(3, 'ceros')",0.392989,5.065089
+3,media,"(3, 'replicate')",0.399731,5.056162
+3,media,"(3, 'symmetric')",0.399731,5.056162
+3,media,"(5, 'ceros')",0.200427,2.159448
+3,media,"(5, 'replicate')",0.218131,2.157511
+3,media,"(5, 'symmetric')",0.218369,2.157428
+3,media,"(7, 'ceros')",0.310391,1.259781
+3,media,"(7, 'replicate')",0.324335,1.257562
+3,media,"(7, 'symmetric')",0.325884,1.258330
+3,gaussiano,"('fspecial', 3, 1.0)",1.141764,6.177189
+3,gaussiano,"('fspecial', 5, 1.0)",1.425342,4.649207
+3,gaussiano,"('imgaussfilt', 5, 1.0)",1.434826,4.650730
+3,gaussiano,"('fspecial', 3, 0.5)",0.133490,14.283297
+3,gaussiano,"('fspecial', 5, 0.5)",0.132873,14.264947
+3,gaussiano,"('imgaussfilt', 3, 0.5)",0.133926,14.289737
+3,mediana_ponderada,"(4,)",0.610416,7.144236
+3,mediana_ponderada,"(1,)",0.232359,3.278096
+3,mediana_ponderada,"(2,)",0.317358,3.526694
+3,mediana_ponderada,"(3,)",0.508928,4.956301
+3,mediana_ponderada,"(5,)",0.734066,9.521563
